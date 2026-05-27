@@ -76,6 +76,7 @@ This starter kit includes an opinionated Composer workflow for keeping Laravel a
 - `composer ready` runs IDE helper generation, Rector, Pint, PHPStan, tests, and Composer audit.
 - `composer report` runs Rector, Pint, PHPStan, tests, and Composer audit as a non-blocking report.
 - `composer ci:check` runs the default project test check used by this starter kit.
+- `php artisan fresh` resets the database to a fresh, seeded state. You can add additional steps to set your application up for local development.
 
 ## Working With Assets
 
