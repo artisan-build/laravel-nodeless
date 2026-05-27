@@ -79,9 +79,25 @@ This starter kit includes an opinionated Composer workflow for keeping Laravel a
 
 ## Working With Assets
 
-The starter kit intentionally does not include a source asset pipeline. Application CSS, font CSS, fonts, and the passkey browser helper are committed as static files in `public/build/assets`.
+The starter kit intentionally does not require a source asset pipeline. Application CSS, font CSS, fonts, and the passkey browser helper are committed as static files in `public/build/assets`.
 
-If you need a heavily customized visual system, this may not be the right starter kit yet. The goal is to support Laravel apps that are happy with the included Livewire/Flux baseline and prefer zero frontend build tooling.
+By default, there is still no frontend build step. The application loads `public/build/assets/app.css`, `public/build/assets/fonts.css`, and `public/build/assets/passkeys.js` directly.
+
+If CSS size matters or you add Tailwind classes and want to regenerate the checked-in CSS, run the opt-in optimizer:
+
+```bash
+php artisan tailwind:optimize
+```
+
+The command downloads the standalone Tailwind CSS CLI for your operating system, caches it under `storage/app/tools`, scans the configured Tailwind sources, and writes the optimized output to `public/build/assets/app.css`. It does not require Node, npm, or Vite, and it is not part of the default setup or CI workflow.
+
+You can force a fresh CLI download or change paths when needed:
+
+```bash
+php artisan tailwind:optimize --force-download
+php artisan tailwind:optimize --tailwind-version=v4.3.0
+php artisan tailwind:optimize --input=resources/css/tailwind.css --output=public/build/assets/app.css
+```
 
 ## Repository
 

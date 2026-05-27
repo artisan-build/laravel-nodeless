@@ -1,5 +1,5 @@
 @assets
-<script src="{{ asset('build/assets/passkeys-ZWACIUjA.js') }}" defer></script>
+<script src="{{ asset('build/assets/passkeys.js') }}" defer></script>
 @endassets
 
 <div

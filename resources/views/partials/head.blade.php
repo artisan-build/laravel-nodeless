@@ -9,6 +9,6 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-<link rel="stylesheet" href="{{ asset('build/assets/fonts-DkuEHybc.css') }}">
-<link rel="stylesheet" href="{{ asset('build/assets/app-CnO4A1g3.css') }}">
+<link rel="stylesheet" href="{{ asset('build/assets/fonts.css') }}">
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 @fluxAppearance
