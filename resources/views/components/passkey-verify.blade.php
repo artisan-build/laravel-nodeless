@@ -7,7 +7,7 @@
 ])
 
 @assets
-@vite('resources/js/passkeys.js')
+<script src="{{ asset('build/assets/passkeys-ZWACIUjA.js') }}" defer></script>
 @endassets
 
 <div
