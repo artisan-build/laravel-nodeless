@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\Fresh;
 use App\Console\Commands\OptimizeTailwind;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -12,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withCommands([
+        Fresh::class,
         OptimizeTailwind::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
