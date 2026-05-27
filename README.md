@@ -1,4 +1,4 @@
-# Laravel Nodeless
+# Laravel Nodeless Starter Kit
 
 Laravel Nodeless is a Laravel starter kit for building Livewire applications without a frontend build system.
 
@@ -59,6 +59,23 @@ Run the test suite:
 ```bash
 php artisan test
 ```
+
+## Composer Scripts
+
+This starter kit includes an opinionated Composer workflow for keeping Laravel applications ready to ship:
+
+- `composer setup` installs dependencies, creates `.env`, generates the app key, and runs migrations.
+- `composer dev` starts Laravel's local development server without Vite or Node.
+- `composer lint` runs Laravel Pint and fixes PHP style issues.
+- `composer test:lint` runs Laravel Pint in check-only mode.
+- `composer lint:check` is an alias for the check-only Pint run.
+- `composer rector` runs Rector with the Laravel code quality, collection, and Laravel level sets.
+- `composer stan` runs PHPStan through Larastan at level 6.
+- `composer test` clears cached config, checks PHP formatting, and runs the Laravel test suite.
+- `composer ide-helper` regenerates Laravel IDE Helper files and model mixins.
+- `composer ready` runs IDE helper generation, Rector, Pint, PHPStan, tests, and Composer audit.
+- `composer report` runs Rector, Pint, PHPStan, tests, and Composer audit as a non-blocking report.
+- `composer ci:check` runs the default project test check used by this starter kit.
 
 ## Working With Assets
 

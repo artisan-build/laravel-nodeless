@@ -55,6 +55,9 @@ class Security extends Component
     #[Locked]
     public bool $canManagePasskeys;
 
+    /**
+     * @var array<int, array{id: int, name: string, authenticator: mixed, created_at_diff: string, last_used_at_diff: string|null}>
+     */
     #[Locked]
     public array $passkeys = [];
 
@@ -278,6 +281,8 @@ class Security extends Component
 
     /**
      * Get the current modal configuration state.
+     *
+     * @return array{title: string, description: string, buttonText: string}
      */
     #[Computed]
     public function modalConfig(): array

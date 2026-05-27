@@ -9,6 +9,9 @@ use Livewire\Component;
 
 class RecoveryCodes extends Component
 {
+    /**
+     * @var array<int, string>
+     */
     #[Locked]
     public array $recoveryCodes = [];
 
@@ -39,7 +42,9 @@ class RecoveryCodes extends Component
 
         if ($user->hasEnabledTwoFactorAuthentication() && $user->two_factor_recovery_codes) {
             try {
-                $this->recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
+                $recoveryCodes = json_decode((string) decrypt($user->two_factor_recovery_codes), true);
+
+                $this->recoveryCodes = is_array($recoveryCodes) ? $recoveryCodes : [];
             } catch (Exception) {
                 $this->addError('recoveryCodes', 'Failed to load recovery codes');
 
