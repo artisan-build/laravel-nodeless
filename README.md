@@ -37,6 +37,16 @@ This tradeoff is deliberate. You give up an editable Tailwind/Vite pipeline in e
 - `resources/js/*`
 - npm and Vite steps from Composer scripts and GitHub Actions
 
+## Installation
+
+Create a new Laravel application using this starter kit:
+
+```bash
+laravel new {project} --using=artisan-build/laravel-nodeless
+```
+
+Replace `{project}` with the directory name for your new application.
+
 ## Getting Started
 
 Install dependencies and prepare the application:
