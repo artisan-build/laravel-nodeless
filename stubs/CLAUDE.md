@@ -45,3 +45,12 @@ direction.
 ## Static analysis
 
 The PHPStan baseline lives in `phpstan-baseline.neon`. Keep it shrinking; never grow it silently.
+
+## Object storage
+
+The starter kit ships `league/flysystem-aws-s3-v3` as a runtime dependency because Laravel Cloud
+**refuses to deploy** an application that has a bucket attached without it — not a warning, a failed
+deployment, with nothing shippable until the package lands. Most apps end up wanting a bucket, so it
+is cheaper to inherit it than to rediscover this during a deploy.
+
+If this project has no bucket and never will, `composer remove league/flysystem-aws-s3-v3` is safe.

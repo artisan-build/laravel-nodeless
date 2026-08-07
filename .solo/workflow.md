@@ -36,8 +36,13 @@ higher hygiene bar than a normal app (no machine-specific paths, no personal con
 
 ## Harness map (role -> runtime; decorrelate model lineages)
 - implementer: OpenCode (Solo agent_tool_id 2)
-- quality reviewer: Codex (Solo agent_tool_id 4, `codex --yolo`)
-- acceptance judge: Claude (Solo agent_tool_id 3; Fable variant is agent_tool_id 10)
+- quality reviewer: Fable (Solo agent_tool_id 10)
+- acceptance judge: Claude (Solo agent_tool_id 3)
+
+Codex is deliberately NOT in this map any more. Codex 0.147.0 self-updates on spawn, and the updated
+TUI then dies under Solo's PTY (`No PTY available`) — a Codex-backed role hangs instead of reviewing.
+This map is the standing fleet-wide assignment; do not revert the reviewer to Codex without first
+confirming that bug is gone.
 
 ## Toolchain conformance — the ride-along rule (STANDING, all projects)
 
