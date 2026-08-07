@@ -111,6 +111,34 @@ php artisan tailwind:optimize --tailwind-version=v4.3.0
 php artisan tailwind:optimize --input=resources/css/tailwind.css --output=public/build/assets/app.css
 ```
 
+## Dependency Maintenance
+
+The kit has no git tags, so `laravel new --using=` resolves `dev-main`. Whatever is in `composer.lock` on `main` is inherited by every project scaffolded from the kit, immediately — which makes stale or vulnerable dependencies here a downstream problem rather than a local one.
+
+Three things keep that from drifting:
+
+- **`.github/dependabot.yml`** — weekly updates for Composer packages and GitHub Actions. Patch and minor are batched into one grouped PR per ecosystem; majors arrive individually. The GitHub Actions half matters because the workflows pin actions by full commit SHA, which is correct practice but means a pin ages silently — there is no version string for anyone to notice going stale.
+- **`composer audit` in CI** — a blocking step in `tests.yml`, matching how `composer ready` already treats audit locally. Dependabot proposes fixes; audit is what fails loudly when something slips through the gap between an advisory being published and a bump landing.
+- **Dependabot alerts and automated security fixes** — enabled at the repository level. These are settings rather than config in `dependabot.yml`, and version updates alone do not give you prompt security fixes.
+
+`dependabot.yml` **does** ship into scaffolded projects: it stays true in any Laravel repo. Delete it if you don't want it.
+
+The one step that needs it to fail loudly: a newly-published advisory anywhere in the tree will turn CI red on unrelated PRs, with no commit having caused it. That is a true signal rather than a bug, and the audit step runs after the tests so you keep the test result when it happens.
+
+### Auto-merge is not included, on purpose
+
+`.github/workflows/dependabot-auto-merge.yml` auto-merges patch and minor Dependabot PRs on green CI, and is **export-ignored** — it does not ship into scaffolded projects.
+
+It depends on repository settings a fresh repo will not have. GitHub only offers auto-merge on a pull request that *cannot* be merged immediately, so without required status checks there is nothing to wait for, and the workflow would merge dependency updates with no CI gate at all. A new private repo silently merging unreviewed changes into `main` is not a reasonable default to inherit. (The workflow also guards on `github.repository`, so a copied file no-ops regardless.)
+
+To opt in, copy the workflow from this repository, change the `github.repository` guard to your own repo, and then set up what makes it safe:
+
+```bash
+gh api -X PATCH repos/OWNER/REPO -F allow_auto_merge=true
+```
+
+Then add a ruleset on `main` requiring your CI checks to pass — without it, auto-merge has nothing to gate on. Majors are never auto-merged.
+
 ## Repository
 
 This project lives at `artisan-build/laravel-nodeless`.
