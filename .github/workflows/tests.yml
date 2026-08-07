@@ -51,3 +51,11 @@ jobs:
 
       - name: Run Tests
         run: ./vendor/bin/pest
+
+      # Blocking, matching how `composer ready` already treats audit locally.
+      #
+      # Runs last on purpose: an advisory can be published against a dependency at any moment, with
+      # no commit here to trigger it, so this step can fail on a PR that changed nothing related.
+      # Keeping it after the tests means the test signal is still there when that happens.
+      - name: Run Security Audit
+        run: composer audit
