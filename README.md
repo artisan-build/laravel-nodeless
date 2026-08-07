@@ -26,6 +26,7 @@ This tradeoff is deliberate. You give up an editable Tailwind/Vite pipeline in e
 - Two-factor authentication
 - Passkey support
 - Prebuilt Tailwind/Flux assets served from `public/build`
+- `league/flysystem-aws-s3-v3` for S3-compatible object storage
 
 ## What's Removed
 
@@ -109,6 +110,23 @@ You can force a fresh CLI download or change paths when needed:
 php artisan tailwind:optimize --force-download
 php artisan tailwind:optimize --tailwind-version=v4.3.0
 php artisan tailwind:optimize --input=resources/css/tailwind.css --output=public/build/assets/app.css
+```
+
+## Object Storage
+
+`league/flysystem-aws-s3-v3` is a runtime dependency of the kit rather than something you add when a project first needs a bucket. Laravel Cloud refuses to deploy an application that has a bucket attached without it:
+
+```
+Your application has an attached bucket but is missing the [league/flysystem-aws-s3-v3] package.
+Please detach the bucket or install the package using [composer require league/flysystem-aws-s3-v3] and retry.
+```
+
+That is a failed deployment rather than a warning, and nothing ships until the package is installed. Most applications scaffolded from this kit end up wanting a bucket, so it arrives already installed.
+
+If yours does not, removing it is one command:
+
+```bash
+composer remove league/flysystem-aws-s3-v3
 ```
 
 ## Dependency Maintenance
