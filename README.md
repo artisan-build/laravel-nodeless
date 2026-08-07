@@ -139,6 +139,8 @@ gh api -X PATCH repos/OWNER/REPO -F allow_auto_merge=true
 
 Then add a ruleset on `main` requiring your CI checks to pass — without it, auto-merge has nothing to gate on. Majors are never auto-merged.
 
+Auto-merge covers **Composer updates only**. A `github-actions` update edits files under `.github/workflows` by definition, and `GITHUB_TOKEN` is refused on any merge that touches them — `workflows` is a GitHub App permission that cannot be granted in a workflow's `permissions:` block. Lifting that needs a PAT or App token with workflow scope kept as a repository secret, which is a genuine increase in attack surface on a public repo and not something to enable by default. Action bumps are a few PRs a year; merge them by hand. Advisories arrive through Composer, which is the case this automation exists for.
+
 ## Repository
 
 This project lives at `artisan-build/laravel-nodeless`.

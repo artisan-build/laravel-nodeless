@@ -40,11 +40,28 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Written as an allowlist rather than `!= 'version-update:semver-major'` so it fails closed:
-      # an empty or unrecognised update-type blocks the merge instead of allowing it. For a grouped
-      # PR this is the highest bump in the group, so one minor among patches is treated as a minor.
+      # Composer only, and here is why: a github-actions update by definition edits files under
+      # .github/workflows, and GITHUB_TOKEN is refused on any merge that touches them —
+      #
+      #   refusing to allow a GitHub App to create or update workflow `.github/workflows/tests.yml`
+      #   without `workflows` permission
+      #
+      # `workflows` is not a scope that can be granted in the permissions block above; it is a
+      # GitHub App permission GITHUB_TOKEN structurally does not have. Lifting it needs a PAT or App
+      # token with workflow scope stored as a repository secret, which is a real increase in attack
+      # surface on a public repo and a deliberate decision rather than a default. Without this guard
+      # every github-actions PR ends in a red X that looks like breakage but is a permission wall.
+      #
+      # Little is lost: advisories arrive through composer, which is what this automation is for.
+      # Action bumps are a few PRs a year and get merged by hand.
+      #
+      # The update-type check is an allowlist rather than `!= 'version-update:semver-major'` so it
+      # fails closed: an empty or unrecognised value blocks the merge instead of allowing it. For a
+      # grouped PR it is the highest bump in the group, so one minor among patches counts as minor.
       - name: Enable auto-merge for patch and minor updates
-        if: contains(fromJSON('["version-update:semver-patch", "version-update:semver-minor"]'), steps.metadata.outputs.update-type)
+        if: >-
+          steps.metadata.outputs.package-ecosystem == 'composer' &&
+          contains(fromJSON('["version-update:semver-patch", "version-update:semver-minor"]'), steps.metadata.outputs.update-type)
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
