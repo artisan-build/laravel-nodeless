@@ -23,7 +23,7 @@ higher hygiene bar than a normal app (no machine-specific paths, no personal con
 - minimum bar: CI MUST include (1) testing and (2) static analysis. If it doesn't, don't gate merges
   on CI (Mode A) until fixed.
 - workflows/jobs: `.github/workflows/tests.yml` — `composer stan` (PHPStan/larastan level 6) then
-  `./vendor/bin/pest`, PHP 8.4 + 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
+  `./vendor/bin/pest`, PHP 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
   Both configure the Flux Pro composer credential (`http-basic.composer.fluxui.dev`) from repo
   secrets `FLUX_USERNAME` / `FLUX_LICENSE_KEY` — known and accepted, not a problem.
 
@@ -73,7 +73,7 @@ unreviewable diff.
 
 ## Stack notes / quirks
 - Nodeless by design: no Node, npm, Vite, or frontend build step. Do not introduce any.
-- Livewire 4 + Flux Pro 2 on Laravel 13; PHP ^8.3 required, CI exercises 8.4/8.5.
+- Livewire 4 + Flux Pro 2 on Laravel 13; PHP ^8.3 required, CI exercises 8.5.
 - `composer ready` regenerates IDE helper files. `_ide_helper.php` / `_ide_helper_models.php` stay
   COMMITTED on purpose — PHPStan `scanFiles` needs `_ide_helper_models.php` to resolve model types.
   `.phpstorm.meta.php` is gitignored (it embeds machine-specific absolute paths); the asymmetry is

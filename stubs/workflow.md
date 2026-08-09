@@ -33,7 +33,7 @@ non-goals; they are the most useful thing a coordinator can know.}}
 - minimum bar: CI MUST include (1) testing and (2) static analysis. If it doesn't, don't gate merges
   on CI (Mode A) until fixed.
 - workflows/jobs: `.github/workflows/tests.yml` — `composer stan` (PHPStan/Larastan level 6) then
-  `./vendor/bin/pest`, PHP 8.4 + 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
+  `./vendor/bin/pest`, PHP 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
   Inherited from the starter kit; this already meets the testing + static analysis bar.
 - Both workflows configure a Flux Pro composer credential from repo secrets `FLUX_USERNAME` /
   `FLUX_LICENSE_KEY`, inherited from the starter kit. The base kit needs only the FREE
@@ -80,7 +80,7 @@ catch-up is a huge unreviewable diff.
 - run-log: per-build scratchpad named `<branch>-run-log`; coordinator appends at every transition
 
 ## Stack notes / quirks
-- Laravel 13, Livewire 4, Flux 2, PHP ^8.3; CI exercises 8.4/8.5.
+- Laravel 13, Livewire 4, Flux 2, PHP ^8.3; CI exercises 8.5.
 - **Nodeless by design: no Node, npm, Vite, or frontend build step. Do not introduce any.**
   Tailwind CSS is served from the committed bundle at `public/build/assets/app.css`.
 - **Adding new Tailwind classes requires regenerating that bundle** with `php artisan
