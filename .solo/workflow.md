@@ -3,8 +3,8 @@
 Project profile for the `multi-agent-build` skill. The coordinator agent reads this FIRST.
 Keep it truthful as the project evolves.
 
-Note: this repo IS the `artisan-build/laravel-nodeless` starter kit (local folder `nodeps` is a
-legacy name). Changes here propagate to every project spawned from it — hold the template to a
+Note: this repo IS the `artisan-build/laravel-nodeless` starter kit (local folder `nodeless`).
+Changes here propagate to every project spawned from it — hold the template to a
 higher hygiene bar than a normal app (no machine-specific paths, no personal config in git).
 
 ## Phase & mode
@@ -68,7 +68,7 @@ unreviewable diff.
 
 ## Plan & coordination
 - plan location: per-build Solo scratchpad (no standing PRD)
-- Solo project: nodeps (7)
+- Solo project: nodeless (44)
 - run-log: per-build scratchpad named `<branch>-run-log`; coordinator appends at every transition
 
 ## Stack notes / quirks
