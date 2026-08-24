@@ -19,7 +19,9 @@ This tradeoff is deliberate. You give up an editable Tailwind/Vite pipeline in e
 
 ## What's Included
 
-- Laravel 13
+- Laravel 13.19+ — the floor is deliberate: Laravel Cloud **managed queues** require
+  `laravel/framework` v11.55.0+, v12.63.0+ or v13.19.0+, and a deploy with a managed queue
+  attached fails to boot below it. Do not relax this constraint.
 - Livewire 4
 - Flux 2
 - Fortify authentication
