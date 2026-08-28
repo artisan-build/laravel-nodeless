@@ -36,13 +36,24 @@ higher hygiene bar than a normal app (no machine-specific paths, no personal con
 
 ## Harness map (role -> runtime; decorrelate model lineages)
 - implementer: OpenCode (Solo agent_tool_id 2)
-- quality reviewer: Fable (Solo agent_tool_id 10)
+- quality reviewer: **Codex** (Solo agent_tool_id 4, `codex --yolo`) — GPT lineage
 - acceptance judge: Claude (Solo agent_tool_id 3)
 
-Codex is deliberately NOT in this map any more. Codex 0.147.0 self-updates on spawn, and the updated
-TUI then dies under Solo's PTY (`No PTY available`) — a Codex-backed role hangs instead of reviewing.
-This map is the standing fleet-wide assignment; do not revert the reviewer to Codex without first
-confirming that bug is gone.
+**Reviewer moved off Fable back to Codex, 2026-08-28 (Ed).** Two reasons, both standing:
+1. The Codex prohibition below is stale. The `No PTY available` failure (Codex 0.147.0 self-updating
+   on spawn, TUI dying under Solo's PTY) was verified gone on 2026-08-09 by spawning `agent_tool_id 4`
+   through Solo on 0.147.0, and again across five PRs of the artisan-tv phase 5 build — spawned cleanly
+   every time, produced a BLOCKING finding on every PR. `multi-agent-build` records Codex as THE
+   standing reviewer (Ed, 2026-08-10): "Fable is no longer the standing choice."
+2. **Do not put Fable in a per-PR role.** Fable draws on a separate weekly usage pool that a
+   review-every-PR slot exhausts fast; Ed hit that wall on 2026-08-28. Fable is for a deliberate
+   one-off second opinion Ed commissions, not a loop seat.
+
+If Codex genuinely regresses here, fall back to a **fresh-context Claude (`agent_tool_id 3`) framed
+adversarially** — NOT Fable — and record the date and the actual symptom here, not just the conclusion.
+If `codex --yolo` won't spawn under Solo, run it one-shot instead:
+`codex exec --sandbox danger-full-access --cd <worktree> "$(cat brief.md)" </dev/null > <outfile> 2>&1`
+(⚠️ `</dev/null` is MANDATORY or it hangs, looking exactly like a slow review).
 
 ## Toolchain conformance — the ride-along rule (STANDING, all projects)
 
