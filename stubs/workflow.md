@@ -35,11 +35,10 @@ non-goals; they are the most useful thing a coordinator can know.}}
 - workflows/jobs: `.github/workflows/tests.yml` — `composer stan` (PHPStan/Larastan level 6) then
   `./vendor/bin/pest`, PHP 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
   Inherited from the starter kit; this already meets the testing + static analysis bar.
-- Both workflows configure a Flux Pro composer credential from repo secrets `FLUX_USERNAME` /
-  `FLUX_LICENSE_KEY`, inherited from the starter kit. The base kit needs only the FREE
-  `livewire/flux`, so those secrets being absent is harmless — the step just writes empty
-  credentials. Known and accepted; do not escalate it. (If this project later adds Flux Pro
-  components, set those secrets on the repo.)
+- The inherited workflows install free `livewire/flux` and do not configure Flux Pro credentials.
+  Flux Pro is optional: a project deliberately opts in by running `php artisan flux:pro`, then adds
+  its own CI authentication step and repo secrets. Projects that have not opted in need no Flux
+  credentials.
 
 ## Dependency install (fresh worktree)
 - command: `composer install --no-interaction --prefer-dist`
