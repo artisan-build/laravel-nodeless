@@ -23,7 +23,7 @@ This tradeoff is deliberate. You give up an editable Tailwind/Vite pipeline in e
   `laravel/framework` v11.55.0+, v12.63.0+ or v13.19.0+, and a deploy with a managed queue
   attached fails to boot below it. Do not relax this constraint.
 - Livewire 4
-- Flux 2
+- Flux 2 (free); Flux Pro remains an optional per-project upgrade
 - Fortify authentication
 - Two-factor authentication
 - Passkey support
@@ -90,7 +90,7 @@ This starter kit includes an opinionated Composer workflow for keeping Laravel a
 - `composer report` runs Rector, Pint, PHPStan, tests, and Composer audit as a non-blocking report.
 - `composer ci:check` runs the default project test check used by this starter kit.
 - `php artisan fresh` resets the database to a fresh, seeded state. You can add additional steps to set your application up for local development.
-- `php artisan flux:pro` installs Flux Pro by adding the Flux Pro Composer repository and requiring `livewire/flux-pro`. This assumes your Flux Pro credentials are already saved globally; if they are not, run `php artisan flux:activate` instead.
+- `php artisan flux:pro` deliberately opts a project into Flux Pro by adding its Composer repository and requiring `livewire/flux-pro`. The starter kit uses free Flux and needs no Flux credentials unless you run this command. The command assumes your Pro credentials are already saved globally; if they are not, run `php artisan flux:activate` instead.
 
 ## Working With Assets
 

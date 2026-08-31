@@ -24,13 +24,12 @@ higher hygiene bar than a normal app (no machine-specific paths, no personal con
   on CI (Mode A) until fixed.
 - workflows/jobs: `.github/workflows/tests.yml` — `composer stan` (PHPStan/larastan level 6) then
   `./vendor/bin/pest`, PHP 8.5 matrix; `.github/workflows/lint.yml` — `composer lint` (Pint).
-  Both configure the Flux Pro composer credential (`http-basic.composer.fluxui.dev`) from repo
-  secrets `FLUX_USERNAME` / `FLUX_LICENSE_KEY` — known and accepted, not a problem.
+  Both install free `livewire/flux` without Flux Pro credentials. Flux Pro is an optional per-project
+  upgrade installed deliberately with `php artisan flux:pro`; a project that opts in must add its own
+  CI authentication step and repo secrets. Projects that have not opted in need no Flux credentials.
 
 ## Dependency install (fresh worktree)
 - command: `composer install --no-interaction --prefer-dist`
-  (requires Flux Pro credential for `composer.fluxui.dev`; local machines have it in global
-  composer auth — never commit an `auth.json`)
 - post-install: `cp .env.example .env && php artisan key:generate` (tests use in-memory sqlite via
   phpunit.xml; `touch database/database.sqlite` only if running artisan commands that hit the DB)
 
@@ -84,7 +83,7 @@ unreviewable diff.
 
 ## Stack notes / quirks
 - Nodeless by design: no Node, npm, Vite, or frontend build step. Do not introduce any.
-- Livewire 4 + Flux Pro 2 on Laravel 13; PHP ^8.3 required, CI exercises 8.5.
+- Livewire 4 + free Flux 2 on Laravel 13; Flux Pro is optional. PHP ^8.3 required, CI exercises 8.5.
 - `composer ready` regenerates IDE helper files. `_ide_helper.php` / `_ide_helper_models.php` stay
   COMMITTED on purpose — PHPStan `scanFiles` needs `_ide_helper_models.php` to resolve model types.
   `.phpstorm.meta.php` is gitignored (it embeds machine-specific absolute paths); the asymmetry is
