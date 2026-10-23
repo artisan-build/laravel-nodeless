@@ -1,7 +1,6 @@
 <div
     class="py-6 space-y-6 border shadow-sm rounded-xl border-zinc-200 dark:border-white/10"
     wire:cloak
-    x-data="{ showRecoveryCodes: false }"
 >
     <div class="px-6 space-y-2">
         <div class="flex items-center gap-2">
@@ -16,11 +15,11 @@
     <div class="px-6">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <flux:button
-                x-show="!showRecoveryCodes"
+                x-show="!$wire.showRecoveryCodes"
                 icon="eye"
                 icon:variant="outline"
                 variant="primary"
-                @click="showRecoveryCodes = true;"
+                wire:click="showRecoveryCodes"
                 aria-expanded="false"
                 aria-controls="recovery-codes-section"
             >
@@ -28,11 +27,11 @@
             </flux:button>
 
             <flux:button
-                x-show="showRecoveryCodes"
+                x-show="$wire.showRecoveryCodes"
                 icon="eye-slash"
                 icon:variant="outline"
                 variant="primary"
-                @click="showRecoveryCodes = false"
+                wire:click="hideRecoveryCodes"
                 aria-expanded="true"
                 aria-controls="recovery-codes-section"
             >
@@ -41,7 +40,7 @@
 
             @if (filled($recoveryCodes))
                 <flux:button
-                    x-show="showRecoveryCodes"
+                    x-show="$wire.showRecoveryCodes"
                     icon="arrow-path"
                     variant="filled"
                     wire:click="regenerateRecoveryCodes"
@@ -52,11 +51,11 @@
         </div>
 
         <div
-            x-show="showRecoveryCodes"
+            x-show="$wire.showRecoveryCodes"
             x-transition
             id="recovery-codes-section"
             class="relative overflow-hidden"
-            x-bind:aria-hidden="!showRecoveryCodes"
+            x-bind:aria-hidden="!$wire.showRecoveryCodes"
         >
             <div class="mt-3 space-y-3">
                 @error('recoveryCodes')

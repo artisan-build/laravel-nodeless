@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings\TwoFactor;
 
+use App\Concerns\RequiresPasswordConfirmation;
 use Exception;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
 use Livewire\Attributes\Locked;
@@ -9,18 +10,34 @@ use Livewire\Component;
 
 class RecoveryCodes extends Component
 {
+    use RequiresPasswordConfirmation;
+
     /**
      * @var array<int, string>
      */
     #[Locked]
     public array $recoveryCodes = [];
 
+    public bool $showRecoveryCodes = false;
+
     /**
-     * Mount the component.
+     * Reveal the user's recovery codes.
      */
-    public function mount(): void
+    public function showRecoveryCodes(): void
     {
+        $this->ensurePasswordIsConfirmed();
+
         $this->loadRecoveryCodes();
+
+        $this->showRecoveryCodes = true;
+    }
+
+    /**
+     * Hide the user's recovery codes.
+     */
+    public function hideRecoveryCodes(): void
+    {
+        $this->reset('recoveryCodes', 'showRecoveryCodes');
     }
 
     /**
@@ -28,6 +45,8 @@ class RecoveryCodes extends Component
      */
     public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generateNewRecoveryCodes): void
     {
+        $this->ensurePasswordIsConfirmed();
+
         $generateNewRecoveryCodes(auth()->user());
 
         $this->loadRecoveryCodes();
